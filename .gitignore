@@ -1,5 +1,8 @@
 *.class
 
+#target directory for maven compilations
+/target/*
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
