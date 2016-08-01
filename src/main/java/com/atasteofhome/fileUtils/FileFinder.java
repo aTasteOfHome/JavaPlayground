@@ -1,4 +1,4 @@
-package com.atasteofhome.FileUtils;
+package com.atasteofhome.fileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,10 +14,10 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
-*	credit to Victor Tatai, from:
+*	credit to Victor Tatai for the class finder stuff, from:
 *  https://dzone.com/articles/get-all-classes-within-package
 */
-public class ClassFinder {
+public class FileFinder {
 
 	 /**
      * Scans all classes accessible from the context class loader which belong to the given package and subpackages.
@@ -44,6 +44,7 @@ public class ClassFinder {
         }
         return classes.toArray(new Class[classes.size()]);
     }
+
     /**
      * Recursive method used to find all classes in a given directory and subdirs.
      *
@@ -67,5 +68,49 @@ public class ClassFinder {
             }
         }
         return classes;
+    }
+
+    
+    public static String[] getAllPackages(String packageName)
+            throws IOException {
+        return getAllPackages(packageName, false);
+    }
+
+    public static String[] getAllPackages(String packageName, boolean recursive)
+    		throws IOException {
+
+    	ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        assert classLoader != null;
+        String path = packageName.replace('.', '/');
+        Enumeration<URL> resources = classLoader.getResources(path);
+        List<File> dirs = new ArrayList<File>();
+        while (resources.hasMoreElements()) {
+            URL resource = resources.nextElement();
+            dirs.add(new File(resource.getFile()));
+        }
+        ArrayList<String> packages = new ArrayList<String>();
+        for (File directory : dirs) {
+            packages.addAll(findPackages(directory, packageName, recursive));
+        }
+
+        return packages.toArray(new String[packages.size()]);
+    }
+	
+    private static List findPackages(File directory, String packageName, boolean recursive){
+        List<String> packages = new ArrayList<String>();
+        if (!directory.exists()) {
+            return packages;
+        }
+        File[] files = directory.listFiles();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                assert !file.getName().contains(".");
+                packages.add(file.getName());
+                if(recursive){
+                    packages.addAll(findPackages(file, packageName + "." + file.getName(), recursive));
+                }
+            }
+        }
+        return packages;
     }
 }

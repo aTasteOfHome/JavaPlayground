@@ -1,10 +1,10 @@
-package com.atasteofhome.StringSearch;
+package com.atasteofhome.stringUtils;
 
 import java.util.ArrayList;
 
-public class KMP{
+public class StringSearch{
 
-	public static int[] search(String pattern, String text){
+	public static int[] KMPsearch(String pattern, String text){
 
 		if(pattern==null || pattern=="" || text==null || text==""){
 			return null;
@@ -34,7 +34,7 @@ public class KMP{
 			}
 		}
 
-		return KMP.toIntArray(matchIndices);
+		return StringSearch.toIntArray(matchIndices);
 	}
 
 	private static int[] generatePrefixTable(String pattern){

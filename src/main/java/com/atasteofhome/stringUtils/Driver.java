@@ -1,4 +1,4 @@
-package com.atasteofhome.StringSearch;
+package com.atasteofhome.stringUtils;
 
 public class Driver{
 

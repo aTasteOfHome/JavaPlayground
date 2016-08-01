@@ -1,8 +1,8 @@
 package com.atasteofhome;
 
-import java.io.File;
-import java.net.URI;
-import com.atasteofhome.FileUtils.*;
+import com.atasteofhome.fileUtils.*;
+import com.atasteofhome.stringUtils.*;
+import com.atasteofhome.ui.*;
 
 /**
  * Hello world!
@@ -11,36 +11,24 @@ import com.atasteofhome.FileUtils.*;
 public class App {
     public static void main( String[] args ){
         System.out.println( "Hello there! Andrew Tsai here." );
-        File appClassPath=null;
+        String [] packages=null;
         try{
-            Class[] classes=ClassFinder.getClassesInPackage("com.atasteofhome");
-            for(int i=0;i<classes.length;i++){
-                System.out.println(classes[i].getName());
-            }
-        	//getResource(app) is null; fix this
-        	//appClassPath = new File(App.class.getResource("App").toURI());	
+            packages=FileFinder.getAllPackages("com.atasteofhome");
+
+            //catch null pointer exceptions
+            int test=packages.length;
         }catch(Exception e){
         	e.printStackTrace();
         	return;
         }
 
-        if(appClassPath==null){
-        	return;
-        }
-        File[] projectList = appClassPath.listFiles();
-
-        if(projectList==null){
-        	return;
-        }
-
         //prompt user to select which project to view/interact with
-        System.out.println("Which project would you like to view? (Enter the number corresponding to the desired project)");
-        for(int i=0; i<projectList.length; i++){
-        	if(projectList[i].isDirectory())
-        	System.out.println(i + ": " + projectList[i].getName());
-        }
+        System.out.println();
+        int choice = CLI.menu("Which project would you like to view?", packages);
+        System.out.println("\nChoice: " + packages[choice]);
 
         //loop through the packages in this directory. run the Driver main method of selected package.
 
+        System.out.println();
 	}
 }
