@@ -19,6 +19,8 @@ import java.util.jar.JarFile;
 */
 public class FileFinder {
 
+    //directory lister BFS TODO
+
 	 /**
      * Scans all classes accessible from the context class loader which belong to the given package and subpackages.
      *
