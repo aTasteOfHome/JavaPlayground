@@ -1,8 +1,7 @@
 package com.atasteofhome.stringUtils;
 
-public class Driver{
-
-	public static void main(String[] args){
-		//select desired string search algorithm
+public class Driver implements Runnable{
+	public void run(){
+		System.out.println("stringUtils package run");
 	}
 }
