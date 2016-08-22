@@ -37,17 +37,9 @@ public class App {
                 break;
             }
 
-            System.out.println("\nChoice: " + packages[choice]);
+            System.out.println("\n" + choice + ": " + packages[choice] + " selected!");
             try{
-                //call the function using Method.invoke()
-                //get the driver class from the specified package
-                Class driver = Class.forName("com.atasteofhome." + packages[choice] + ".Driver");
-                //get an instance of said class
-                Object driverInstance = driver.newInstance();
-                //get the run method from the driver class
-                Method driverRun = driver.getDeclaredMethod("run",null);
-                //attempt to run it
-                driverRun.invoke(driverInstance, null);
+                PackageManager.runPackageDriver(packages[choice]);
             }catch(Exception e){
                 e.printStackTrace();
                 System.out.println();
